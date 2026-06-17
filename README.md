@@ -24,12 +24,10 @@ Website rekomendasi tempat wisata di Provinsi Lampung yang dibangun menggunakan 
 
 1. Install dependency
 
-bash
 npm install
 
 2. Jalankan aplikasi
 
-bash
 node app.js
 
 3. Buka browser dan akses localhost yang digunakan.
