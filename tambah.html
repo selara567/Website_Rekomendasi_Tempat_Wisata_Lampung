@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tambah Wisata</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-purple-100 via-pink-50 to-orange-100 text-gray-800">
+
+  <nav class="bg-white/80 backdrop-blur-md border-b border-white/30 px-6 py-4 flex justify-between items-center sticky top-0 z-50">
+    <div>
+      <h1 class="text-2xl font-extrabold text-gray-800">Tambah Data Wisata</h1>
+      <p class="text-sm text-gray-500">Masukkan data wisata baru ke dalam sistem</p>
+    </div>
+
+    <a
+      href="/admin/dashboard"
+      class="bg-gradient-to-r from-gray-700 to-gray-900 text-white px-5 py-2.5 rounded-full font-semibold shadow-md hover:opacity-90 transition duration-200"
+    >
+      Kembali
+    </a>
+  </nav>
+
+  <div class="max-w-2xl mx-auto mt-10 mb-10 bg-white/80 backdrop-blur-lg p-8 rounded-2xl shadow-xl border border-white/40">
+    <form
+      action="/admin/tambah"
+      method="POST"
+      enctype="multipart/form-data"
+      class="space-y-5"
+    >
+
+      <div>
+        <label class="block mb-2 font-semibold text-gray-700">Nama Tempat Wisata</label>
+        <input
+          type="text"
+          name="nama"
+          placeholder="Masukkan nama wisata"
+          class="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition"
+          required
+        >
+      </div>
+
+      <div>
+        <label class="block mb-2 font-semibold text-gray-700">Lokasi</label>
+        <input
+          type="text"
+          name="lokasi"
+          placeholder="Masukkan lokasi wisata"
+          class="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition"
+          required
+        >
+      </div>
+
+      <div>
+        <label class="block mb-2 font-semibold text-gray-700">Kategori</label>
+        <select
+          name="kategori"
+          class="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition"
+          required
+        >
+          <option value="">Pilih kategori</option>
+          <option value="Pantai">Pantai</option>
+          <option value="Caffe">Caffe</option>
+          <option value="Taman">Taman</option>
+          <option value="Alam">Alam</option>
+          <option value="Lainnya">Lainnya</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block mb-2 font-semibold text-gray-700">Harga</label>
+        <input
+          type="text"
+          name="harga"
+          placeholder="Contoh: Gratis / Rp10.000"
+          class="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition"
+        >
+      </div>
+
+      <div>
+        <label class="block mb-2 font-semibold text-gray-700">Deskripsi</label>
+        <textarea
+          name="deskripsi"
+          rows="5"
+          placeholder="Masukkan deskripsi wisata"
+          class="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition"
+          required
+        ></textarea>
+      </div>
+
+      <div>
+        <label class="block mb-2 font-semibold text-gray-700">Link Google Maps (opsional)</label>
+        <input
+          type="text"
+          name="mapsLink"
+          placeholder="Masukkan link Google Maps"
+          class="w-full border border-gray-200 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition"
+        >
+      </div>
+
+      <div>
+        <label class="block mb-2 font-semibold text-gray-700">Upload Gambar</label>
+        <input
+          type="file"
+          name="gambar"
+          accept="image/*"
+          class="w-full border border-gray-200 rounded-xl px-4 py-3 cursor-pointer bg-white"
+          required
+        >
+      </div>
+
+      <button
+        type="submit"
+        class="w-full bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 text-white py-3 rounded-xl font-semibold shadow-md hover:scale-[1.02] hover:shadow-lg transition duration-200"
+      >
+        Simpan Wisata
+      </button>
+
+    </form>
+  </div>
+
+</body>
+</html>

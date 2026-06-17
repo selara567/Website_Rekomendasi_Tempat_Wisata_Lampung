@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rekomendasi Wisata Lampung</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .desc-clamp {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .hero-image {
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .hero-image.active {
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body class="bg-white text-gray-800">
+
+  <!-- HERO SECTION -->
+  <section class="relative h-screen overflow-hidden">
+
+    <!-- GAMBAR HERO -->
+    <div class="absolute inset-0">
+      <img src="/images/bg_depan1.jpg" class="hero-image active absolute inset-0 w-full h-full object-cover">
+      <img src="/images/bg_depan2.jpg" class="hero-image absolute inset-0 w-full h-full object-cover">
+      <img src="/images/bg_depan3.jpg" class="hero-image absolute inset-0 w-full h-full object-cover">
+    </div>
+
+    <!-- OVERLAY (SUDAH FIX) -->
+    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent"></div>
+
+    <!-- TEKS HERO -->
+    <div class="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-6 z-10">
+
+      <h1 class="text-4xl md:text-6xl font-extrabold leading-tight max-w-4xl drop-shadow-lg">
+        Mau Liburan Kemana Hari Ini?
+      </h1>
+
+      <p class="mt-4 text-sm md:text-base uppercase tracking-[0.3em] text-white/90">
+        Explore Lampung
+      </p>
+
+      <a
+        href="#wisata"
+        class="mt-8 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 text-white px-7 py-3 rounded-full font-semibold shadow-lg hover:scale-105 transition duration-200"
+      >
+        Jelajahi Wisata
+      </a>
+
+    </div>
+  </section>
+
+  <!-- SECTION WISATA -->
+  <section id="wisata" class="py-16 px-6 md:px-10 bg-gradient-to-br from-purple-50 via-pink-50 to-orange-50">
+    <div class="max-w-7xl mx-auto">
+
+      <div class="mb-8">
+        <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900">
+          Wisata yang Mungkin Kamu Suka
+        </h2>
+        <p class="text-gray-500 mt-2">
+          Temukan destinasi terbaik berdasarkan kategori pilihanmu
+        </p>
+      </div>
+
+      <!-- FILTER -->
+      <div class="flex flex-wrap gap-3 mb-10">
+        <button class="kategori-btn px-5 py-2.5 rounded-full font-medium bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 text-white" data-kategori="all">
+          Semua
+        </button>
+
+        <button class="kategori-btn px-5 py-2.5 rounded-full bg-white border border-gray-200" data-kategori="Pantai">Pantai</button>
+        <button class="kategori-btn px-5 py-2.5 rounded-full bg-white border border-gray-200" data-kategori="Caffe">Caffe</button>
+        <button class="kategori-btn px-5 py-2.5 rounded-full bg-white border border-gray-200" data-kategori="Taman">Taman</button>
+        <button class="kategori-btn px-5 py-2.5 rounded-full bg-white border border-gray-200" data-kategori="Alam">Alam</button>
+        <button class="kategori-btn px-5 py-2.5 rounded-full bg-white border border-gray-200" data-kategori="Lainnya">Lainnya</button>
+      </div>
+
+      <!-- CARD -->
+      <div id="cardContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <% wisata.forEach(function(item) { %>
+
+          <div class="card-item bg-white/80 backdrop-blur-lg rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition border border-white/40"
+               data-kategori="<%= item.kategori %>">
+
+            <div class="relative">
+              <img src="<%= item.gambar %>" class="w-full h-56 object-cover">
+
+              <button
+                class="like-btn absolute bottom-3 right-3 bg-white w-11 h-11 rounded-full flex items-center justify-center shadow text-xl hover:scale-110 transition <%= likedWisata.includes(item._id.toString()) ? 'text-pink-500' : 'text-gray-700' %>"
+                data-id="<%= item._id %>">
+                <%= likedWisata.includes(item._id.toString()) ? '♥' : '♡' %>
+              </button>
+            </div>
+
+            <div class="p-4">
+              <h3 class="text-xl font-bold"><%= item.nama %></h3>
+
+              <p class="text-sm text-gray-500 mt-1"><%= item.lokasi %></p>
+
+              <% if (item.harga) { %>
+                <p class="text-sm text-pink-600 font-semibold mt-2">
+                  Harga: <%= item.harga %>
+                </p>
+              <% } %>
+
+              <p class="text-sm text-gray-600 mt-2 desc-clamp">
+                <%= item.deskripsi %>
+              </p>
+
+              <div class="flex justify-between mt-4">
+                <span class="text-sm">
+                  <span class="like-count"><%= item.like %></span> like
+                </span>
+
+                <a href="/detail/<%= item._id %>" class="text-purple-600 hover:underline">
+                  Selengkapnya
+                </a>
+              </div>
+            </div>
+
+          </div>
+
+        <% }) %>
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+    // HERO SLIDER
+    const heroImages = document.querySelectorAll(".hero-image");
+    let currentHero = 0;
+
+    setInterval(() => {
+      heroImages[currentHero].classList.remove("active");
+      currentHero = (currentHero + 1) % heroImages.length;
+      heroImages[currentHero].classList.add("active");
+    }, 3500);
+
+    // FILTER
+    const kategoriButtons = document.querySelectorAll(".kategori-btn");
+    const cards = document.querySelectorAll(".card-item");
+
+    kategoriButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        const kategori = button.dataset.kategori;
+
+        cards.forEach(card => {
+          const cat = card.dataset.kategori;
+
+          if (kategori === "all" || cat === kategori) {
+            card.style.display = "block";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      });
+    });
+
+    // LIKE
+    document.querySelectorAll(".like-btn").forEach(button => {
+      button.addEventListener("click", async () => {
+        const id = button.dataset.id;
+        const card = button.closest(".card-item");
+        const likeCount = card.querySelector(".like-count");
+
+        const res = await fetch(`/like/${id}`, { method: "POST" });
+        const data = await res.json();
+
+        if (data.success) {
+          likeCount.textContent = data.like;
+
+          if (data.liked) {
+            button.textContent = "♥";
+            button.classList.add("text-pink-500");
+          } else {
+            button.textContent = "♡";
+            button.classList.remove("text-pink-500");
+          }
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
